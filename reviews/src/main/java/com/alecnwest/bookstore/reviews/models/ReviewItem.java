@@ -1,21 +1,42 @@
 package com.alecnwest.bookstore.reviews.models;
 
-public class ReviewItem extends ReviewInput {
+import jakarta.persistence.*;
+import org.hibernate.annotations.NaturalId;
+
+@Entity
+@Table(name = "reviews")
+public class ReviewItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String reviewId;
 
+    @NaturalId
+    private String bookId;
+
+    @NaturalId
+    private String userId;
+
+    private String content;
+    private int rating;
+
     public ReviewItem() {
-        super();
     }
 
-    public ReviewItem(String reviewId, ReviewInput reviewInput) {
-        super(reviewInput.getBookId(), reviewInput.getUserId(), reviewInput.getContent(), reviewInput.getRating());
-        this.reviewId = reviewId;
+    public ReviewItem(String bookId, String userId, String content, int rating) {
+        this.bookId = bookId;
+        this.userId = userId;
+        this.content = content;
+        this.rating = rating;
     }
 
     public ReviewItem(String reviewId, String bookId, String userId, String content, int rating) {
-        super(bookId, userId, content, rating);
         this.reviewId = reviewId;
+        this.bookId = bookId;
+        this.userId = userId;
+        this.content = content;
+        this.rating = rating;
     }
+
 
     public String getReviewId() {
         return reviewId;
@@ -23,5 +44,38 @@ public class ReviewItem extends ReviewInput {
 
     public void setReviewId(String reviewId) {
         this.reviewId = reviewId;
+    }
+
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
