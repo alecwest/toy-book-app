@@ -13,6 +13,6 @@ const recentBooks = [
 
 export class RecentBooksService {
   getRecentBooks() {
-    return recentBooks;
+    return { books: recentBooks };
   }
 }

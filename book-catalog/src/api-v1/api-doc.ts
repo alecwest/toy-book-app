@@ -25,6 +25,9 @@ const apiDoc: OpenAPIV3.Document = {
         type: "object",
         required: ["title", "isbn"],
         properties: {
+          id: {
+            type: "string",
+          },
           title: {
             type: "string",
           },

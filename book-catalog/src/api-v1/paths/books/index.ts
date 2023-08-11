@@ -1,17 +1,17 @@
-import { RecentBooksService } from "../../services/recentBooksService";
+import { AllBooksService } from "../../services/allBooksService";
 
-export default function (recentBooksService: RecentBooksService) {
+export default function (allBooksService: AllBooksService) {
   const operations = {
     GET,
   };
 
   function GET(req: any, res: any, next: any) {
-    res.status(200).json(recentBooksService.getRecentBooks());
+    res.status(200).json(allBooksService.getAllBooks());
   }
 
   GET.apiDoc = {
-    operationId: "recentBooks",
-    summary: "Get a list of the most recently published books",
+    operationId: "allBooks",
+    summary: "Get a list of all books",
     responses: {
       "200": {
         description: "200 response",

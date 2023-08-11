@@ -1,6 +1,7 @@
 import express from "express";
 import { initialize } from "express-openapi";
 import { RecentBooksService as V1RecentBooksService } from "./api-v1/services/recentBooksService";
+import { AllBooksService as V1AllBooksService } from "./api-v1/services/allBooksService";
 import v1ApiDoc from "./api-v1/api-doc";
 import { serve, setup } from "swagger-ui-express";
 import path from "path";
@@ -12,6 +13,7 @@ initialize({
   paths: path.resolve(__dirname, "./api-v1/paths"),
   dependencies: {
     recentBooksService: new V1RecentBooksService(),
+    allBooksService: new V1AllBooksService(),
   },
 });
 
