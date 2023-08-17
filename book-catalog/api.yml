@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: Toy Book API
+  version: 1.0.0
+paths:
+  /books/recent:
+    get:
+      operationId: recentBooks
+      summary: Get a list of the most recently published books
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Books'
+  /books/findByGenre:
+    get:
+      operationId: getBooksByGenre
+      summary: Get a list of books by their genre(s)
+      parameters:
+        - name: genres
+          in: query
+          description: Genres to filter by
+          required: false
+          explode: true
+          schema: 
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Books'
+                
+  /books/book/{bookId}:
+    get:
+      summary: Get book by ID
+      description: Returns a single book
+      operationId: getBookById
+      parameters:
+      - name: bookId
+        in: path
+        description: ID of book to get
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+    delete:
+      summary: Delete book by ID
+      description: Deletes a single book
+      operationId: deleteBookById
+      parameters:
+      - name: bookId
+        in: path
+        description: ID of book to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+  /books/book:
+    post:
+      summary: Create book
+      description: Returns a single book
+      operationId: createBook
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+    put:
+      summary: Update book
+      description: Updates a single book
+      operationId: updateBook
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+  /books/book/findByIsbn:
+    get:
+      summary: Find book by ISBN Number
+      description: Provide either ISBN10 or ISBN13
+      operationId: findBookByISBN
+      parameters:
+        - name: isbn
+          in: query
+          description: ISBN to find
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+          
+components:
+  schemas:
+    Books:
+      type: object
+      required: 
+        - books
+      properties:
+        books:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
+    Book:
+      type: object
+      required:
+        - title
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        author:
+          type: string
+        isbn10:
+          type: string
+        isbn13:
+          type: string
+        genre:
+          type: array
+          items:
+            type: string
