@@ -1,4 +1,4 @@
-import { Arg, Query, Resolver } from "type-graphql";
+import { Arg, Args, ArgsType, Field, Query, Resolver } from "type-graphql";
 import { Book } from "../models/book";
 import { BookService } from "../services/BookService";
 import { Service } from "typedi";
@@ -8,6 +8,18 @@ export class BookNotFoundError extends Error {
     super();
     this.cause = "Book not found!";
   }
+}
+
+@ArgsType()
+export class GetBooksArgs {
+  @Field({ nullable: true })
+  author?: string;
+
+  @Field({ nullable: true })
+  title?: string;
+
+  @Field({ nullable: true })
+  genre?: string;
 }
 
 @Service()
@@ -22,5 +34,16 @@ export class BookResolver {
       throw new BookNotFoundError(id);
     }
     return book;
+  }
+
+  @Query((returns) => [Book])
+  async books(@Args() { author, title, genre }: GetBooksArgs) {
+    const booksByAuthor = await this.bookService.findByAuthor(author);
+    const booksByTitle = await this.bookService.findByTitle(title);
+    const booksByGenre = await this.bookService.findByGenre(genre);
+
+    return booksByAuthor
+      .filter((bba) => booksByTitle.find((bbt) => bbt.id == bba.id))
+      .filter((bba) => booksByGenre.find((bbg) => bbg.id == bba.id));
   }
 }
