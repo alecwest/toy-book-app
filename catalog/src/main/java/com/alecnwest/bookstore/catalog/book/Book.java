@@ -28,6 +28,7 @@ public class Book {
 
     private String isbn13;
 
+    // TODO find a way to make genre only accept lowercase strings
     // ElementCollection made MEMBER OF named query possible https://stackoverflow.com/questions/2687690/jpa-2-and-hibernate-3-5-1-member-of-query-doesnt-work
     @ElementCollection
     @Description("The genres that describe the book")
