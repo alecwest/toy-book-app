@@ -1,18 +1,10 @@
-import "reflect-metadata";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { buildSchema } from "type-graphql";
-import { BookResolver } from "./resolvers/BookResolver";
-import { ReviewResolver } from "./resolvers/ReviewResolver";
-import Container from "typedi";
+import { typeDefs } from "./models/typeDefs";
+import { resolvers } from "./resolvers/resolvers";
 
 async function main() {
-  const schema = await buildSchema({
-    resolvers: [BookResolver, ReviewResolver],
-    container: Container,
-  });
-
-  const server = new ApolloServer({ schema });
+  const server = new ApolloServer({ typeDefs, resolvers });
 
   const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
