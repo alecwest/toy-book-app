@@ -45,8 +45,17 @@ export const resolvers = {
   },
 
   Review: {
+    book: (parent, _, __, ___) => {
+      return books.find((b) => b.id == parent.bookId);
+    },
     user: (parent, _, __, ___) => {
       return users.find((u) => u.id == parent.userId);
+    },
+  },
+
+  User: {
+    reviews: (parent, _, __, ___) => {
+      return reviews.filter((f) => f.userId == parent.id);
     },
   },
 };
