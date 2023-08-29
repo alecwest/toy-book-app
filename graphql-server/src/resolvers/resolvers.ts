@@ -10,17 +10,12 @@ const requestInfo: RequestInit = {
 
 export const resolvers = {
   Query: {
-    books: () => {
-      return books;
-      // return fetch(`http://localhost:8091/books`, requestInfo)
-      //   .then((resp) => {
-      //     return resp.json();
-      //   })
-      //   .then((resp) => readResults(resp));
+    books: (_, __, { dataSources }) => {
+      return dataSources.booksAPI.getBooks();
     },
 
-    book: (_, args, __, ___) => {
-      return books.find((book) => book.id == args.id);
+    book: (_, args, { dataSources }, ___) => {
+      return dataSources.booksAPI.getBook(args.id);
     },
 
     reviews: (parent, _, __, ___) => reviews,
@@ -59,13 +54,3 @@ export const resolvers = {
     },
   },
 };
-
-function readResults(data): any[] {
-  return data._embedded.books.map((book) => {
-    console.log(book);
-    book["id"] = (book["_links"]["self"]["href"] as string)
-      .split("/")
-      .reverse()[0];
-    return book;
-  });
-}
