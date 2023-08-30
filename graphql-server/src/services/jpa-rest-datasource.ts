@@ -5,15 +5,22 @@ export abstract class JpaRestDataSource<T = any> extends RESTDataSource {
   abstract modelName: string;
 
   async getItems(): Promise<T[]> {
-    return this.get<T>(this.modelName).then((resp) =>
+    return this.getList(this.modelName);
+  }
+
+  async getItem(id: String): Promise<T> {
+    return this.getSingle(`${this.modelName}/${id}`);
+  }
+
+  protected async getList(url: string): Promise<T[]> {
+    return this.get<T>(url).then((resp) =>
       this.readJpaResults(resp, this.modelName)
     );
   }
 
-  async getItem(id: String): Promise<T> {
-    return this.get(`${this.modelName}/${id}`).then((resp) =>
-      this.readJpaResult(resp)
-    );
+  protected async getSingle(url: string): Promise<T> {
+    const resp = await this.get<T>(url);
+    return this.readJpaResult(resp);
   }
 
   private readJpaResults(data, modelName: string): T[] {

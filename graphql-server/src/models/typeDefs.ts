@@ -30,6 +30,8 @@ export const typeDefs = `#graphql
     books: [Book!]
     book(id: ID!): Book!
     reviews: [Review!]
+    review(id: ID!): Review!
     users: [User!]
+    user(id: ID!): User!
   }
 `;
