@@ -3,11 +3,15 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { typeDefs } from "./models/typeDefs";
 import { resolvers } from "./resolvers/resolvers";
 import { BooksAPI } from "./services/books-api";
+import { ReviewsAPI } from "./services/reviews-api";
+import { UsersAPI } from "./services/users-api";
 
 async function main() {
   interface ContextValue {
     dataSources: {
       booksAPI: BooksAPI;
+      reviewsAPI: ReviewsAPI;
+      usersAPI: UsersAPI;
     };
   }
 
@@ -20,6 +24,8 @@ async function main() {
       return {
         dataSources: {
           booksAPI: new BooksAPI({ cache }),
+          reviewsAPI: new ReviewsAPI({ cache }),
+          usersAPI: new UsersAPI({ cache }),
         },
       };
     },

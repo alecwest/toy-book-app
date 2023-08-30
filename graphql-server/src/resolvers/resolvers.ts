@@ -1,13 +1,3 @@
-import fetch, { RequestInit } from "node-fetch";
-import { books, reviews, users } from "../dummyData/dummy";
-
-const requestInfo: RequestInit = {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
-
 export const resolvers = {
   Query: {
     books: (_, __, { dataSources }) => {
@@ -18,19 +8,26 @@ export const resolvers = {
       return dataSources.booksAPI.getBook(args.id);
     },
 
-    reviews: (parent, _, __, ___) => reviews,
+    reviews: (_, __, { dataSources }, ___) =>
+      dataSources.reviewsAPI.getReviews(),
 
-    users: () => users,
+    users: (_, __, { dataSources }, ___) => dataSources.usersAPI.getUsers(),
   },
 
   Book: {
-    reviews: (parent, _, __, ___) => {
-      return reviews.filter((review) => review.bookId === parent.id);
+    reviews: (parent, _, { dataSources }, ___) => {
+      return dataSources.reviewsAPI
+        .getReviews()
+        .then((reviews) =>
+          reviews.filter((review) => review.bookId === parent.id)
+        );
     },
-    averageRating: (parent, _, __, ___) => {
-      const bookReviews = reviews.filter(
-        (review) => review.bookId === parent.id
-      );
+    averageRating: async (parent, _, { dataSources }, ___) => {
+      const bookReviews = await dataSources.reviewsAPI
+        .getReviews()
+        .then((reviews) =>
+          reviews.filter((review) => review.bookId === parent.id)
+        );
       return (
         bookReviews.reduce((prev, curr) => {
           return prev + curr.rating;
@@ -40,17 +37,23 @@ export const resolvers = {
   },
 
   Review: {
-    book: (parent, _, __, ___) => {
-      return books.find((b) => b.id == parent.bookId);
+    book: (parent, _, { dataSources }, ___) => {
+      return dataSources.booksAPI
+        .getBooks()
+        .then((books) => books.find((b) => b.id == parent.bookId));
     },
-    user: (parent, _, __, ___) => {
-      return users.find((u) => u.id == parent.userId);
+    user: (parent, _, { dataSources }, ___) => {
+      return dataSources.usersAPI
+        .getUsers()
+        .then((users) => users.find((u) => u.id == parent.userId));
     },
   },
 
   User: {
-    reviews: (parent, _, __, ___) => {
-      return reviews.filter((f) => f.userId == parent.id);
+    reviews: (parent, _, { dataSources }, ___) => {
+      return dataSources.reviewsAPI
+        .getReviews()
+        .then((reviews) => reviews.filter((f) => f.userId == parent.id));
     },
   },
 };
