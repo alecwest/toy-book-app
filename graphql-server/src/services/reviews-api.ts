@@ -19,4 +19,13 @@ export class ReviewsAPI extends JpaRestDataSource {
       )}`
     );
   }
+
+  createReview(input: {
+    bookId: string;
+    userId: string;
+    rating: number;
+    content: string;
+  }) {
+    return this.post(`${this.modelName}`, { body: input });
+  }
 }

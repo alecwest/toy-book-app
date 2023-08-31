@@ -21,6 +21,14 @@ export const resolvers = {
     },
   },
 
+  Mutation: {
+    createReview: (_, args, { dataSources }, ____) => {
+      const review = args.input;
+      console.log(review);
+      return dataSources.reviewsAPI.createReview(review);
+    },
+  },
+
   Book: {
     reviews: (parent, _, { dataSources }, ___) => {
       return dataSources.reviewsAPI.findByBook(parent.id);

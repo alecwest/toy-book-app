@@ -2,6 +2,8 @@ export const typeDefs = `#graphql
 
   type Book {
     id: ID!
+    bookId: String
+    reviewId: String
     title: String
     author: String
     isbn10: String
@@ -33,5 +35,16 @@ export const typeDefs = `#graphql
     review(id: ID!): Review!
     users: [User!]
     user(id: ID!): User!
+  }
+
+  input CreateReviewInput {
+    bookId: String!
+    userId: String!
+    rating: Int!
+    content: String
+  }
+
+  type Mutation {
+    createReview(input: CreateReviewInput!): Review!
   }
 `;
