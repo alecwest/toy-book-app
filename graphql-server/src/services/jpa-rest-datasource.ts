@@ -23,11 +23,11 @@ export abstract class JpaRestDataSource<T = any> extends RESTDataSource {
     return this.readJpaResult(resp);
   }
 
-  private readJpaResults(data, modelName: string): T[] {
+  protected readJpaResults(data, modelName: string): T[] {
     return data._embedded[modelName].map((book) => this.readJpaResult(book));
   }
 
-  private readJpaResult(result): T {
+  protected readJpaResult(result): T {
     result["id"] = (result["_links"]["self"]["href"] as string)
       .split("/")
       .reverse()[0];

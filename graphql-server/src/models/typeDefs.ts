@@ -44,7 +44,15 @@ export const typeDefs = `#graphql
     content: String
   }
 
+  input EditReviewInput {
+    reviewId: ID!
+    rating: Int!
+    content: String
+  }
+
   type Mutation {
     createReview(input: CreateReviewInput!): Review!
+    editReview(input: EditReviewInput!): Review!
+    deleteReview(reviewId: ID!): Review!
   }
 `;

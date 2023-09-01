@@ -1,5 +1,19 @@
 import { JpaRestDataSource } from "./jpa-rest-datasource";
 
+export interface ReviewInput {
+  rating: number;
+  content: string;
+}
+
+export interface CreateReviewInput extends ReviewInput {
+  bookId: string;
+  userId: string;
+}
+
+export interface EditReviewInput extends ReviewInput {
+  reviewId: string;
+}
+
 export class ReviewsAPI extends JpaRestDataSource {
   baseURL = "http://localhost:8092/";
   modelName = "reviews";
@@ -20,12 +34,21 @@ export class ReviewsAPI extends JpaRestDataSource {
     );
   }
 
-  createReview(input: {
-    bookId: string;
-    userId: string;
-    rating: number;
-    content: string;
-  }) {
-    return this.post(`${this.modelName}`, { body: input });
+  createReview(input: CreateReviewInput) {
+    return this.post(`${this.modelName}`, { body: input }).then(
+      this.readJpaResult
+    );
+  }
+
+  editReview(input: EditReviewInput) {
+    return this.patch(`${this.modelName}/${input.reviewId}`, {
+      body: { rating: input.rating, content: input.content } as ReviewInput,
+    }).then(this.readJpaResult);
+  }
+
+  deleteReview(reviewId: string) {
+    return this.delete(`${this.modelName}/${reviewId}`).then(
+      this.readJpaResult
+    );
   }
 }

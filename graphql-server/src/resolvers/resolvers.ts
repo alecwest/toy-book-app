@@ -24,8 +24,16 @@ export const resolvers = {
   Mutation: {
     createReview: (_, args, { dataSources }, ____) => {
       const review = args.input;
-      console.log(review);
       return dataSources.reviewsAPI.createReview(review);
+    },
+
+    editReview: (_, args, { dataSources }, ____) => {
+      const review = args.input;
+      return dataSources.reviewsAPI.editReview(review);
+    },
+
+    deleteReview: (_, args, { dataSources }, ____) => {
+      return dataSources.reviewsAPI.deleteReview(args.reviewId);
     },
   },
 
