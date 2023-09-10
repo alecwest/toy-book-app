@@ -20,6 +20,7 @@ const RatingIndicator = ({ rating }: { rating: number }) => {
     }
   }
 
+  // TODO show a smaller rating element when on XS screens
   return <Paper>{stars}</Paper>;
 };
 
