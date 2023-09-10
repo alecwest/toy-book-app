@@ -7,6 +7,7 @@ import {
   Box,
 } from "@mui/material";
 import { Star, StarBorder, StarHalf } from "@mui/icons-material";
+import { RatingIndicator } from ".";
 
 const BookCard = () => {
   return (
@@ -37,12 +38,9 @@ const BookCard = () => {
               Author
             </Typography>
           </Box>
+          {/* TODO Rating component */}
           <Box>
-            <Star></Star>
-            <Star></Star>
-            <Star></Star>
-            <StarHalf></StarHalf>
-            <StarBorder></StarBorder>
+            <RatingIndicator rating={2.76}></RatingIndicator>
           </Box>
         </CardContent>
       </CardActionArea>
