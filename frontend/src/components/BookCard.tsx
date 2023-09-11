@@ -6,10 +6,9 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { Star, StarBorder, StarHalf } from "@mui/icons-material";
 import { RatingIndicator } from ".";
 
-const BookCard = () => {
+const BookCard = ({ book }: { book: any }) => {
   return (
     <Card sx={{ display: "flex", mb: 1 }}>
       <CardActionArea sx={{ display: "flex", justifyContent: "flex-start" }}>
@@ -28,19 +27,19 @@ const BookCard = () => {
           }}>
           <Box sx={{ flex: "1 0 auto" }}>
             <Typography variant="subtitle1" component="div">
-              Title
+              {book.title}
             </Typography>
             <Typography
               gutterBottom
               variant="subtitle2"
               component="div"
               color="text.secondary">
-              Author
+              {book.author}
             </Typography>
           </Box>
           {/* TODO Rating component */}
           <Box>
-            <RatingIndicator rating={2.76}></RatingIndicator>
+            <RatingIndicator rating={book.averageRating}></RatingIndicator>
           </Box>
         </CardContent>
       </CardActionArea>
