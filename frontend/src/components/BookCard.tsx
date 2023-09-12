@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardActionArea,
@@ -7,11 +9,16 @@ import {
   Box,
 } from "@mui/material";
 import { RatingIndicator } from ".";
+import { useRouter } from "next/navigation";
 
 const BookCard = ({ book }: { book: any }) => {
+  const router = useRouter();
+
   return (
     <Card sx={{ display: "flex", mb: 1 }}>
-      <CardActionArea sx={{ display: "flex", justifyContent: "flex-start" }}>
+      <CardActionArea
+        sx={{ display: "flex", justifyContent: "flex-start" }}
+        onClick={() => router.push(`/book/${book.id}`)}>
         <CardMedia
           sx={{ maxWidth: "100px" }}
           component="img"

@@ -2,7 +2,13 @@ import { Star, StarBorder, StarHalf } from "@mui/icons-material";
 import { Paper } from "@mui/material";
 import React from "react";
 
-const RatingIndicator = ({ rating }: { rating: number }) => {
+const RatingIndicator = ({
+  rating,
+  elevation,
+}: {
+  rating: number;
+  elevation?: number;
+}) => {
   const stars = [];
   for (let i = 0; i < 5; i++) {
     if (rating - i >= 1) {
@@ -21,7 +27,7 @@ const RatingIndicator = ({ rating }: { rating: number }) => {
   }
 
   // TODO show a smaller rating element when on XS screens
-  return <Paper>{stars}</Paper>;
+  return <Paper elevation={elevation || 0}>{stars}</Paper>;
 };
 
 export default RatingIndicator;

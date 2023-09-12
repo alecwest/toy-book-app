@@ -23,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <CustomAppBar></CustomAppBar>
-        {children}
+        <main className="flex min-h-screen flex-col justify-between p-24">
+          {children}
+        </main>
       </body>
     </html>
   );
