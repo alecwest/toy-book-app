@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-volume0
+  labels:
+    app: postgres
+    type: local
+spec:
+  capacity:
+    storage: 8Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  # nfs:
+    # path: "/var/lib/postgresql/12/main" # TODO this isn't right
+    # server: 172.17.0.2
+  hostPath:
+    path: "/mnt/postgresql"
+    # mount minikube directory using
+    # mk start --driver=docker --mount-string="/home/awest/dev/alecwest/toy-book-app/data:/data/postgresql" --mount
+    # https://github.com/kubernetes/minikube/issues/8732#issuecomment-892196682
+    # path: "/home/awest/dev/toy-book-app/data"
