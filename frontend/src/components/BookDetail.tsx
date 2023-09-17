@@ -1,8 +1,8 @@
-import client from "@/lib/apolloClient";
-import { gql } from "@apollo/client";
+"use client";
+
+import { gql, useQuery } from "@apollo/client";
 import { Box, Container, Paper, Typography } from "@mui/material";
 import Image from "next/image";
-import React from "react";
 import { RatingIndicator } from ".";
 
 interface Book {
@@ -22,39 +22,36 @@ interface Review {
   content: string;
 }
 
-async function getBook(bookId: string): Promise<Book> {
-  const { data } = await client.query({
-    query: gql`
-      query Book($bookId: ID!) {
-        book(id: $bookId) {
-          title
-          author
-          isbn10
-          isbn13
-          genre
-          averageRating
-          reviews {
-            id
-            user {
-              name
-            }
-            rating
-            content
-          }
+const GET_BOOK = gql`
+  query Book($bookId: ID!) {
+    book(id: $bookId) {
+      title
+      author
+      isbn10
+      isbn13
+      genre
+      averageRating
+      reviews {
+        id
+        user {
+          name
         }
+        rating
+        content
       }
-    `,
+    }
+  }
+`;
+
+const BookDetail = ({ id }: { id: string }) => {
+  const { loading, error, data } = useQuery(GET_BOOK, {
     variables: {
-      bookId,
+      bookId: id,
     },
   });
-
-  return data.book as Book;
-}
-
-const BookDetail = async ({ id }: { id: string }) => {
-  const book = await getBook(id);
-  console.log(book);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  const book: Book = data?.book;
   return (
     <Container>
       <Paper className="p-4">

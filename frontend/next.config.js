@@ -11,6 +11,7 @@ const nextConfig = {
     ],
     dangerouslyAllowSVG: true,
   },
+  output: "standalone",
 };
 
 module.exports = nextConfig;
