@@ -1,6 +1,7 @@
 export const resolvers = {
   Query: {
     books: (_, __, { dataSources }) => {
+      console.log("someone asked for all books!");
       return dataSources.booksAPI.getItems();
     },
 

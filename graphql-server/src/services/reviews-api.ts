@@ -15,7 +15,7 @@ export interface EditReviewInput extends ReviewInput {
 }
 
 export class ReviewsAPI extends JpaRestDataSource {
-  baseURL = "http://localhost:8092/";
+  baseURL = `http://reviews:8080/`;
   modelName = "reviews";
 
   findByUser(userId: string): Promise<any> {

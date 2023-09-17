@@ -16,7 +16,7 @@ export const books = [
     genre: ["science fiction"],
   },
   {
-    id: "030755bb-70df-4497-9428-f3cf58733151",
+    id: "030755bb-70df-4497-9428-f3cf58733151", // abcd
     title: "ABCD",
     author: "John Smith",
     isbn13: "2328176412312",
@@ -28,22 +28,22 @@ export const books = [
 export const reviews = [
   {
     id: "d9d8a367-f950-4b9b-8512-4d2a8e188c67",
-    bookId: "d9d8a367-f950-4b9b-8511-4d2a8e188c67",
-    userId: "e9d8a367-f950-4b9b-8511-4d2a8e188c67",
+    bookId: "d9d8a367-f950-4b9b-8511-4d2a8e188c67", // Some book title
+    userId: "e9d8a367-f950-4b9b-8511-4d2a8e188c67", // awest
     content: "It was pretty good",
     rating: 5,
   },
   {
     id: "d9d8a367-f950-4b9b-8512-4d2a8e188c67",
-    bookId: "d9d8a367-f950-4b9b-8511-4d2a8e188c67",
-    userId: "130755bb-70df-4497-9428-f3cf58733150",
+    bookId: "d9d8a367-f950-4b9b-8511-4d2a8e188c67", // some book title
+    userId: "130755bb-70df-4497-9428-f3cf58733150", // gwilson
     content: "Not my speed",
     rating: 2,
   },
   {
     id: "d9d8a367-f950-4b9b-8512-4d2a8e188c67",
-    bookId: "030755bb-70df-4497-9428-f3cf58733151",
-    userId: "e9d8a367-f950-4b9b-8511-4d2a8e188c67",
+    bookId: "030755bb-70df-4497-9428-f3cf58733151", // abcd
+    userId: "e9d8a367-f950-4b9b-8511-4d2a8e188c67", // awest
     content: "I couldn't finish it...",
     rating: 1,
   },
@@ -51,12 +51,12 @@ export const reviews = [
 
 export const users = [
   {
-    id: "e9d8a367-f950-4b9b-8511-4d2a8e188c67",
+    id: "e9d8a367-f950-4b9b-8511-4d2a8e188c67", // awest
     name: "Alec West",
     username: "awest",
   },
   {
-    id: "130755bb-70df-4497-9428-f3cf58733150",
+    id: "130755bb-70df-4497-9428-f3cf58733150", // gwilson
     name: "Gary Wilson",
     username: "gwilson",
   },
