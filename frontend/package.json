@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "echo \"NEXT_PUBLIC_GRAPHQL=$(minikube service graphql --url)\" > .env.local",
+    "predev": "echo \"NEXT_PUBLIC_GRAPHQL=$(minikube service graphql --url)\" > .env.development.local",
     "dev": "next dev",
     "build": "next build",
     "build:docker": "docker build -t alecwest/toy-book-app-frontend:$npm_package_version .",
     "start": "next start",
     "lint": "next lint"
   },
+  "//@apollo/experimental-nextjs-app-support": "https://www.apollographql.com/blog/apollo-client/next-js/how-to-use-apollo-client-with-next-js-13/",
   "dependencies": {
     "@apollo/client": "^3.8.3",
+    "@apollo/experimental-nextjs-app-support": "^0.4.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",

@@ -1,9 +1,9 @@
-"use client";
-
-import { gql, useQuery } from "@apollo/client";
+import { getClient, revalidateFastOr } from "@/lib/apolloClient";
+import { gql } from "@apollo/client";
 import { Box, Container, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import { RatingIndicator } from ".";
+import { __DEV__ } from "@apollo/client/utilities/globals";
 
 interface Book {
   title: string;
@@ -22,36 +22,45 @@ interface Review {
   content: string;
 }
 
-const GET_BOOK = gql`
-  query Book($bookId: ID!) {
-    book(id: $bookId) {
-      title
-      author
-      isbn10
-      isbn13
-      genre
-      averageRating
-      reviews {
-        id
-        user {
-          name
+async function getBook(bookId: string): Promise<Book> {
+  console.log("getting book ", bookId);
+  const { data } = await getClient()
+    .query({
+      query: gql`
+        query Book($bookId: ID!) {
+          book(id: $bookId) {
+            title
+            author
+            isbn10
+            isbn13
+            genre
+            averageRating
+            reviews {
+              id
+              user {
+                name
+              }
+              rating
+              content
+            }
+          }
         }
-        rating
-        content
-      }
-    }
-  }
-`;
+      `,
+      variables: {
+        bookId,
+      },
+      context: revalidateFastOr(60),
+    })
+    .catch((e) => {
+      console.log("Error while fetching book,", e);
+      return { data: { book: null } };
+    });
 
-const BookDetail = ({ id }: { id: string }) => {
-  const { loading, error, data } = useQuery(GET_BOOK, {
-    variables: {
-      bookId: id,
-    },
-  });
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  const book: Book = data?.book;
+  return data.book as Book;
+}
+
+const BookDetail = async ({ id }: { id: string }) => {
+  const book = await getBook(id);
   return (
     <Container>
       <Paper className="p-4">

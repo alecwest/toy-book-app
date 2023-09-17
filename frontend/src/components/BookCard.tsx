@@ -8,7 +8,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { RatingIndicator } from ".";
+import RatingIndicator from "./RatingIndicator";
 import { useRouter } from "next/navigation";
 
 const BookCard = ({ book }: { book: any }) => {

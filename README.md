@@ -90,3 +90,5 @@ kc apply -f deployment-frontend.yaml
 ## Notes
 
 - run `minikube service graphql` to open graphql in the browser
+- run `minikube service frontend` to open the frontend in the browser
+- run `minikube service graphql --url` to just get a url of the service accessible from the host machine

@@ -1,27 +1,35 @@
-"use client";
-
-import { gql, useQuery } from "@apollo/client";
+import { getClient, revalidateFastOr } from "@/lib/apolloClient";
+import { gql } from "@apollo/client";
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { BookCard } from ".";
-import { APOLLO_SERVER } from "@/lib/constants";
 
-const GET_BOOKS = gql`
-  query Books {
-    books {
-      id
-      title
-      author
-      averageRating
-    }
-  }
-`;
+async function getBooks() {
+  console.log("getting all books");
+  const { data } = await getClient()
+    .query({
+      query: gql`
+        query Books {
+          books {
+            id
+            title
+            author
+            averageRating
+          }
+        }
+      `,
+      context: revalidateFastOr(60),
+    })
+    .catch((e) => {
+      console.error("Error while fetching books,", e);
+      return { data: { books: [] } };
+    });
 
-const Catalog = () => {
-  const { loading, error, data } = useQuery(GET_BOOKS);
-  const books = data?.books;
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  return data.books;
+}
+
+const Catalog = async () => {
+  const books = await getBooks();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
