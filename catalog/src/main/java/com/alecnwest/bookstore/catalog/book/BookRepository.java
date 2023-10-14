@@ -12,6 +12,6 @@ public interface BookRepository extends JpaRepository<Book, String> {
     // table 2.3 at https://docs.spring.io/spring-data/jpa/docs/1.6.0.RELEASE/reference/html/jpa.repositories.html
     List<Book> findByTitleContainingIgnoreCase(String title);
 
-    @Query("from Book where LOWER(?1) MEMBER OF genre")
+    @Query("from Book where ?1 MEMBER OF genre")
     List<Book> findByGenre(String genre);
 }
