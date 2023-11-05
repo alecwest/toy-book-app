@@ -12,8 +12,17 @@ gw clean bootBuildImage
 # Catalog
 ./mvnw clean spring-boot:build-image -DskipTests
 
+# Catalog Finder
+gw clean bootBuildImage
+
 # Graphql server
 npm run build:docker
+```
+
+Start minikube:
+
+```shell
+minikube start --driver=docker --mount-string="/home/awest/dev/alecwest/toy-book-app/data:/mnt/postgresql" --mount --disk-size=40000
 ```
 
 Apply PV and PVC
@@ -81,6 +90,7 @@ Apply the other deployments
 
 ```shell
 kc apply -f deployment-catalog.yaml
+kc apply -f deployment-catalog-finder.yaml
 kc apply -f deployment-reviews.yaml
 kc apply -f deployment-users.yaml
 kc apply -f deployment-graphql.yaml
@@ -92,3 +102,4 @@ kc apply -f deployment-frontend.yaml
 - run `minikube service graphql` to open graphql in the browser
 - run `minikube service frontend` to open the frontend in the browser
 - run `minikube service graphql --url` to just get a url of the service accessible from the host machine
+- run `helm delete postgresql` to remove
