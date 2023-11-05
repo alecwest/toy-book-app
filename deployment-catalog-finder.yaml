@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name:  catalog-finder
+  labels:
+    app: catalog-finder
+spec:
+  selector:
+    app:  catalog-finder
+  type:  ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-finder
+  labels:
+    app: catalog-finder
+spec:
+  selector:
+    matchLabels:
+      app: catalog-finder
+  template:
+    metadata:
+      labels:
+        app: catalog-finder
+    spec:
+      containers:
+      - name: catalog-finder
+        image: alecwest/toy-book-app-catalog-finder:0.0.1-SNAPSHOT
+        imagePullPolicy: "Always"
+        ports:
+        - containerPort: 8080
+          name: catalog-finder
+        resources:
+          limits:
+            memory: "768Mi"
+            cpu: "500m"
+---

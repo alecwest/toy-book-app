@@ -3,9 +3,8 @@ package com.alecnwest.bookstore.catalogFinder.bookfinder;
 import com.alecnwest.bookstore.catalog.book.Book;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -16,11 +15,16 @@ import java.util.Objects;
 @Service
 public class BookFinderService {
     @Autowired
-    private RestTemplate restTemplate;
+    private WebClient.Builder webClientBuilder;
 
     private List<Book> findGoogleBooks(URI uri) {
-        ResponseEntity<GoogleBooksResult> googleBooksResultResponseEntity = restTemplate.getForEntity(uri, GoogleBooksResult.class);
-        GoogleBooksResult result = googleBooksResultResponseEntity.getBody();
+        GoogleBooksResult result = webClientBuilder
+                .build()
+                .get()
+                .uri(uri)
+                .retrieve()
+                .bodyToMono(GoogleBooksResult.class)
+                .block();
         List<Book> response = List.of();
         if (result != null) {
             response = Arrays.stream(result.items()).map(item -> {
